@@ -1,0 +1,40 @@
+{
+  "name": "variats-api",
+  "version": "1.0.0",
+  "description": "Video variant processing API with zoom, audio filters, ambient tracks, and metadata randomization",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "start:enhanced": "node dist/enhanced-server.js",
+    "dev": "ts-node src/index.ts",
+    "dev:enhanced": "ts-node src/enhanced-server.ts",
+    "watch": "nodemon --exec ts-node src/index.ts",
+    "watch:enhanced": "nodemon --exec ts-node src/enhanced-server.ts"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.16.0",
+    "@prisma/client": "^6.12.0",
+    "@types/bcryptjs": "^3.0.0",
+    "aws-sdk": "^2.1692.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^4.18.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "multer": "^1.4.5-lts.1",
+    "prisma": "^6.12.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.17",
+    "@types/fluent-ffmpeg": "^2.1.21",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^20.4.5",
+    "@types/uuid": "^9.0.8",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}

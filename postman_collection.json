@@ -1,0 +1,236 @@
+{
+  "info": {
+    "name": "Variats API",
+    "description": "Video variant processing API with zoom, audio filters, ambient tracks, and metadata randomization",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "API Documentation",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api"]
+        }
+      }
+    },
+    {
+      "name": "Upload Video and Process",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "video",
+              "type": "file",
+              "src": "/path/to/your/video.mp4",
+              "description": "Video file to process (.mp4, .avi, .mov, .mkv - max 500MB)"
+            },
+            {
+              "key": "options",
+              "value": "{\"zoom\": 1.1, \"introText\": \"Welcome to my video!\", \"outroText\": \"Thanks for watching!\"}",
+              "type": "text",
+              "description": "Optional JSON string with processing options"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/variants/upload",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "variants", "upload"]
+        }
+      }
+    },
+    {
+      "name": "Process Video by Path",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"inputVideo\": \"/workspaces/variats/uploads/test_video.mp4\",\n  \"outputVideo\": \"/workspaces/variats/outputs/variant_test.mp4\",\n  \"options\": {\n    \"zoom\": 1.05,\n    \"jitter\": 3,\n    \"rotate\": 1.5,\n    \"volumeDb\": 2,\n    \"introText\": \"Welcome to this content!\",\n    \"outroText\": \"Thanks for watching!\"\n  }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/variants/process",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "variants", "process"]
+        }
+      }
+    },
+    {
+      "name": "Batch Process Videos",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"inputVideo\": \"/workspaces/variats/uploads/test_video.mp4\",\n  \"count\": 3,\n  \"baseOptions\": {\n    \"zoom\": 1.1,\n    \"introText\": \"Batch processed video\"\n  }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/variants/batch",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "variants", "batch"]
+        }
+      }
+    },
+    {
+      "name": "Get Job Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/variants/job/{{jobId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "variants", "job", "{{jobId}}"]
+        }
+      }
+    },
+    {
+      "name": "Get All Jobs",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/variants/jobs",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "variants", "jobs"]
+        }
+      }
+    },
+    {
+      "name": "Delete Job",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/variants/job/{{jobId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "variants", "job", "{{jobId}}"]
+        }
+      }
+    },
+    {
+      "name": "Download Processed Video",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/variants/download/{{jobId}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "variants", "download", "{{jobId}}"]
+        }
+      }
+    },
+    {
+      "name": "Test: Text + Zoom + Speed + Vivid Filter",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"inputVideo\": \"/workspaces/variats/test_video.mp4\",\n  \"options\": {\n    \"introText\": \"Welcome to my enhanced video!\",\n    \"outroText\": \"Subscribe for more content!\",\n    \"zoom\": 1.25,\n    \"playbackSpeed\": 1.25,\n    \"filter\": \"vivid\",\n    \"volumeDb\": 1.5,\n    \"metadata\": {\n      \"title\": \"Enhanced_Video_Test\",\n      \"description\": \"Test_video_with_text_zoom_speed_and_vivid_filter\",\n      \"creator\": \"Video_Enhancement_Test\"\n    }\n  }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/variants/process",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "variants", "process"]
+        },
+        "description": "Test request that combines:\n- Intro text: 'Welcome to my enhanced video!'\n- Outro text: 'Subscribe for more content!'\n- Zoom: 1.25x (25% zoom in)\n- Playback speed: 1.25x (25% faster)\n- Visual filter: 'vivid' (enhanced saturation and contrast)\n- Volume boost: +1.5dB\n- Custom metadata for fingerprint avoidance"
+      },
+      "response": []
+    },
+    {
+      "name": "Test: Upload + Enhanced Processing",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "video",
+              "type": "file",
+              "src": "/path/to/your/video.mp4",
+              "description": "Video file to process with enhanced options"
+            },
+            {
+              "key": "options",
+              "value": "{\"introText\": \"Welcome to my enhanced video!\", \"outroText\": \"Subscribe for more content!\", \"zoom\": 1.25, \"playbackSpeed\": 1.25, \"filter\": \"vivid\", \"volumeDb\": 1.5, \"jitter\": 2, \"rotate\": 0.5}",
+              "type": "text",
+              "description": "Enhanced processing options with text, zoom, speed, and vivid filter"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/variants/upload",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "variants", "upload"]
+        },
+        "description": "Upload and process video with comprehensive enhancements:\n- Text overlays (intro/outro)\n- 1.25x zoom and playback speed\n- Vivid color filter\n- Audio enhancement\n- Slight jitter and rotation for uniqueness"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "jobId",
+      "value": "your-job-id-here",
+      "description": "Job ID returned from processing requests"
+    }
+  ]
+}

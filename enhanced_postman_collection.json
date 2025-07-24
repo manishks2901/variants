@@ -1,0 +1,423 @@
+{
+	"info": {
+		"_postman_id": "enhanced-variats-api",
+		"name": "Enhanced Variats Video Processing API v2.0",
+		"description": "Enhanced video processing API with database persistence, batch processing, and advanced color effects",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"version": "2.0.0"
+	},
+	"item": [
+		{
+			"name": "Health & Info",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "health"]
+						}
+					}
+				},
+				{
+					"name": "API Documentation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/docs",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "docs"]
+						}
+					}
+				},
+				{
+					"name": "Color Presets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/presets",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "presets"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Single Video Processing",
+			"item": [
+				{
+					"name": "Process Video - Basic",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "zoom",
+									"value": "1.2",
+									"type": "text"
+								},
+								{
+									"key": "text",
+									"value": "Sample Text Overlay",
+									"type": "text"
+								},
+								{
+									"key": "preset",
+									"value": "vintage",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/process",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "process"]
+						}
+					}
+				},
+				{
+					"name": "Process Video - Custom Color Effects",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "rotation",
+									"value": "15",
+									"type": "text"
+								},
+								{
+									"key": "text",
+									"value": "Custom Effects Demo",
+									"type": "text"
+								},
+								{
+									"key": "fontSize",
+									"value": "32",
+									"type": "text"
+								},
+								{
+									"key": "fontColor",
+									"value": "yellow",
+									"type": "text"
+								},
+								{
+									"key": "position",
+									"value": "bottom-right",
+									"type": "text"
+								},
+								{
+									"key": "colorEffects",
+									"value": "{\"hue\": 30, \"saturation\": 1.3, \"brightness\": 0.1, \"contrast\": 1.2, \"gamma\": 0.9}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/process",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "process"]
+						}
+					}
+				},
+				{
+					"name": "Process Video - Dramatic Preset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "zoom",
+									"value": "1.5",
+									"type": "text"
+								},
+								{
+									"key": "jitter",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "preset",
+									"value": "dramatic",
+									"type": "text"
+								},
+								{
+									"key": "text",
+									"value": "DRAMATIC EFFECT",
+									"type": "text"
+								},
+								{
+									"key": "fontSize",
+									"value": "48",
+									"type": "text"
+								},
+								{
+									"key": "fontColor",
+									"value": "#FF0000",
+									"type": "text"
+								},
+								{
+									"key": "position",
+									"value": "center",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/process",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "process"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Batch Processing",
+			"item": [
+				{
+					"name": "Batch Process Videos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videos",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "videos",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "batchName",
+									"value": "My Awesome Batch",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Processing multiple videos with vintage effect",
+									"type": "text"
+								},
+								{
+									"key": "preset",
+									"value": "vintage",
+									"type": "text"
+								},
+								{
+									"key": "text",
+									"value": "Batch Processed",
+									"type": "text"
+								},
+								{
+									"key": "zoom",
+									"value": "1.1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/batch",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "batch"]
+						}
+					}
+				},
+				{
+					"name": "Get Batch Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/batch/{{batchId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "batch", "{{batchId}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Job Management",
+			"item": [
+				{
+					"name": "Get Job Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/job/{{jobId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "job", "{{jobId}}"]
+						}
+					}
+				},
+				{
+					"name": "Download Processed Video",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/job/{{jobId}}/download",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "job", "{{jobId}}", "download"]
+						}
+					}
+				},
+				{
+					"name": "List All Jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/jobs?page=1&limit=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "jobs"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "List Jobs by User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v2/jobs?userId={{userId}}&page=1&limit=5",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v2", "jobs"],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Legacy API (v1)",
+			"item": [
+				{
+					"name": "Process Video (Legacy)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "zoom",
+									"value": "1.2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/process-variant",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "v1", "process-variant"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "jobId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "batchId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "test-user-123",
+			"type": "string"
+		}
+	]
+}

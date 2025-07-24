@@ -1,0 +1,183 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for managing API users
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  name         String?
+  passwordHash String?
+  apiKey       String?  @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  jobs      VideoJob[]
+  batches   BatchJob[]
+  templates ProcessingTemplate[] @relation(name: "TemplateCreator")
+
+  @@map("users")
+}
+
+// Video processing job model
+model VideoJob {
+  id           String    @id @default(uuid())
+  originalName String
+  filePath     String
+  outputPath   String?
+  status       JobStatus @default(PENDING)
+  progress     Float     @default(0)
+  errorMessage String?
+  startedAt    DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Processing options stored as JSON
+  options Json?
+
+  // Relations
+  userId     String?
+  user       User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  variants   VideoVariant[]
+  batchJobId String?
+  batchJob   BatchJob?      @relation(fields: [batchJobId], references: [id], onDelete: SetNull)
+
+  // Cloud storage info
+  cloudStorageUrl String?
+  cloudProvider   CloudProvider?
+
+  @@map("video_jobs")
+}
+
+// Video variant model for different processed versions
+model VideoVariant {
+  id             String    @id @default(uuid())
+  name           String
+  filePath       String
+  outputPath     String?
+  status         JobStatus @default(PENDING)
+  progress       Float     @default(0)
+  errorMessage   String?
+  processingTime Int? // in milliseconds
+  fileSize       BigInt? // in bytes
+  duration       Float? // in seconds
+  resolution     String? // e.g., "1920x1080"
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Variant-specific processing options
+  variantOptions Json?
+
+  // Relations
+  videoJobId String
+  videoJob   VideoJob @relation(fields: [videoJobId], references: [id], onDelete: Cascade)
+
+  // Cloud storage info
+  cloudStorageUrl String?
+  cloudProvider   CloudProvider?
+
+  @@map("video_variants")
+}
+
+// Batch processing model for handling multiple videos
+model BatchJob {
+  id            String      @id @default(uuid())
+  name          String
+  description   String?
+  status        BatchStatus @default(PENDING)
+  totalJobs     Int         @default(0)
+  completedJobs Int         @default(0)
+  failedJobs    Int         @default(0)
+  progress      Float       @default(0)
+  startedAt     DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Batch processing options
+  batchOptions Json?
+
+  // Relations
+  userId String?
+  user   User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  jobs   VideoJob[]
+
+  @@map("batch_jobs")
+}
+
+// Processing templates for reusable configurations
+model ProcessingTemplate {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  templateOptions Json // Stores the processing configuration
+  isPublic        Boolean  @default(false)
+  usageCount      Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  createdById String?
+  createdBy   User?   @relation(fields: [createdById], references: [id], onDelete: SetNull, name: "TemplateCreator")
+
+  @@map("processing_templates")
+}
+
+// System metrics for monitoring
+model SystemMetric {
+  id         String     @id @default(uuid())
+  metricType MetricType
+  value      Float
+  metadata   Json?
+  timestamp  DateTime   @default(now())
+
+  @@map("system_metrics")
+}
+
+// Enums
+enum JobStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum BatchStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+  PAUSED
+}
+
+enum CloudProvider {
+  AWS_S3
+  GOOGLE_CLOUD
+  LOCAL
+}
+
+enum MetricType {
+  PROCESSING_TIME
+  FILE_SIZE
+  QUEUE_LENGTH
+  ERROR_RATE
+  DISK_USAGE
+  MEMORY_USAGE
+  CPU_USAGE
+}
